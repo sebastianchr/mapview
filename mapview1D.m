@@ -21,6 +21,7 @@ default.boundaries1D=[-0.5 0.5];
 default.showaxis=1;
 default.normalize=1;
 default.color='r';
+default.linewidth=1;
 default.linestyle='-';
 default.units='fractional';
 default.unitcell=[1 1 1 90 90 90];
@@ -31,6 +32,7 @@ if nargin>3
     if (isfield(settings,'boundaries1D'));                               default.boundaries1D=settings.boundaries1D;  end
     if (isfield(settings,'units') && isfield(settings,'unitcell'));      default.units=settings.units;end
     if (isfield(settings,'color'));                                      default.color=settings.color;end
+    if (isfield(settings,'linewidth'));                                  default.linewidth=settings.linewidth;end
     if (isfield(settings,'style'));                                      default.linestyle=settings.linestyle;end
     if (isfield(settings,'showaxis'));                                   default.showaxis=settings.showaxis;end
     if (isfield(settings,'normalize'));                                  default.normalize=settings.normalize;end
@@ -110,12 +112,20 @@ switch settings.units
 end
 
 hold on
-h=plot(XI,vint,'Color',settings.color,'linestyle',settings.linestyle);
+h=plot(XI,vint,'Color',settings.color,'linestyle',settings.linestyle,'linewidth',settings.linewidth);
 switch settings.units
     case 'absolute'
         xlim([settings.boundaries1D(1:2)*vnorm(1)])
     case 'fractional'
         xlim(settings.boundaries1D)
 end
-
+if settings.showaxis
+    axis on
+else
+    axis off
+    c=axis;
+    plot([c(1) c(1) c(2) c(2) c(1)], [c(3) c(4) c(4) c(3) c(3)],'.','Color',[1 1 1 ],'MarkerSize',0.1)
+    p0=plot(c(1:2),[0 0],'--','color',[0.5 0.5 0.5],'linewidth',settings.linewidth);
+    uistack(p0,'bottom');
+end
 end

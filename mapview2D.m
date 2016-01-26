@@ -395,3 +395,23 @@ elseif previous_hold==1
 end
 
 end
+
+function z = round2(x,y)
+%ROUND2 rounds number to nearest multiple of arbitrary precision.
+%   Z = ROUND2(X,Y) rounds X to nearest multiple of Y.
+%
+%Example 1: round PI to 2 decimal places
+%   >> round2(pi,0.01)
+%   ans =
+%         3.14
+
+%% defensive programming
+error(nargchk(2,2,nargin))
+error(nargoutchk(0,1,nargout))
+if numel(y)>1
+  error('Y must be scalar')
+end
+
+%%
+z = round(x/y)*y;
+end 

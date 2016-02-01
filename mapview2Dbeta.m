@@ -234,12 +234,9 @@ if settings.surf==1
     end
     colormap(map)
 %     h=surf(xi,yi,vint);
-
-    h=imagesc(xi([1 end]),yi([1 end]),vint);     
-set(gca,'ydir','normal')
-    shading interp
-caxis(settings.coloraxis)
-
+%     caxis(settings.coloraxis)
+%     shading interp
+    h=imagesc(xi([1 end]),yi([1 end]),vint);
 end
 
 if settings.contour==1 % positive and negative contourlevels are drawn
@@ -294,12 +291,6 @@ if settings.contour==1 % positive and negative contourlevels are drawn
         set(h, 'EdgeColor', settings.contour_color_negative)
         set(h, 'LineStyle', settings.contour_style_negative)
         
-        hh = get(h,'Children');    %# get handles to patch objects
-        Zoffset=max(vint(:));
-        for i=1:numel(hh)
-            zdata = Zoffset*ones(size( get(hh(i),'XData') ));
-            set(hh(i), 'ZData',zdata)
-        end
         hold on
         %make small white dots in the corner of the plot to avoid the size
         %of the plot is reduced when saved without axis
@@ -319,13 +310,6 @@ if settings.contour==1 % positive and negative contourlevels are drawn
         set(h, 'EdgeColor', settings.contour_color)
         set(h, 'LineStyle', settings.contour_style)
         hh = get(h,'Children');    %# get handles to patch objects
-        Zoffset=max(vint(:));
-        for i=1:numel(hh)
-            zdata = Zoffset*ones(size( get(hh(i),'XData') ));
-            set(hh(i), 'ZData',zdata)
-        end
-        %         set(hh, {'ZData'}, cellfun(@(x) Zoffset*ones(size(x)),get(hh,{'XData'}), 'UniformOutput',false))
-        %should be equivalent to the above for-loop
         
         hold on
         c=[min(xi(:)) max(xi(:)) min(yi(:)) max(yi(:))];

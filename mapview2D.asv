@@ -236,8 +236,7 @@ if settings.surf==1
 %     h=surf(xi,yi,vint);
 
     h=imagesc(xi([1 end]),yi([1 end]),vint);     
-set(gca,'ydir','normal')
-    shading interp
+shading interp
 caxis(settings.coloraxis)
 
 end
